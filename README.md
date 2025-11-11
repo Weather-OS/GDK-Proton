@@ -22,6 +22,8 @@ xgameruntime.dll.threading
 
 ## For Minecraft
 
+**NOTES**: OpenSSL only works in protonified wine builds. You can use GDK-Proton (in the Releases section of this Repository) if you are not inclined to build proton from scratch yourself.   
+
 To get online functionality working, you will need to follow this guide, exactly as mentioned:  
 1) Download [mingw-w64-x86_64-curl](https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-curl-8.17.0-1-any.pkg.tar.zst) and extract it
 2) In the extracted folder, rename `mingw64/bin/libcurl-4.dll` to `XCurl.dll`.
