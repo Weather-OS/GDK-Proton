@@ -1,0 +1,39 @@
+#!/bin/bash
+
+dir=${1:-.}
+pushd $dir
+
+# Backup original XCurl.dll
+mv "./XCurl.dll" "./XCurl.dll~"
+
+# Download required mingw64 dlls
+brotli=('brotli-1.1.0-2' 'libbrotlicommon libbrotlidec')
+curl=('curl-8.20.0-1' 'libcurl-4')
+gettext=('gettext-runtime-1.0-1' 'libintl-8')
+libiconv=('libiconv-1.19-1' 'libiconv-2')
+libidn2=('libidn2-2.3.8-4' 'libidn2-0')
+libpsl=('libpsl-0.21.5-3' 'libpsl-5')
+libssh2=('libssh2-1.11.1-2' 'libssh2-1')
+libunistring=('libunistring-1.2-1' 'libunistring-5')
+nghttp2=('nghttp2-1.69.0-1' 'libnghttp2-14')
+nghttp3=('nghttp3-1.9.0-1' 'libnghttp3-9')
+ngtcp2=('ngtcp2-1.22.1-1' 'libngtcp2-16 libngtcp2_crypto_ossl-0')
+openssl=('openssl-3.6.2-2' 'libcrypto-3-x64 libssl-3-x64')
+zlib=('zlib-1.3.2-2' 'zlib1')
+zstd=('zstd-1.5.7-2' 'libzstd')
+
+packages=(brotli curl gettext libiconv libidn2 libpsl libssh2 libunistring nghttp2 nghttp3 ngtcp2 openssl zlib zstd)
+
+declare -n package
+for package in ${packages[@]}; do
+    curl "https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-${package[0]}-any.pkg.tar.zst" -o - | tar --zstd -x $(echo ${package[1]} | xargs printf -- 'mingw64/bin/%s.dll ')--transform "s/mingw64\/bin\///"
+done
+
+# Rename curl dll
+mv "libcurl-4.dll" "XCurl.dll"
+
+# Download required ssl certificates
+mkdir -p "../etc/ssl/certs"
+curl 'https://curl.se/ca/cacert.pem' -o "../etc/ssl/certs/ca-bundle.crt"
+
+popd

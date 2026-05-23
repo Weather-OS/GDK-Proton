@@ -20,18 +20,14 @@ mingw-w64-x86_64-libunistring
 xgameruntime.dll.threading
 ```
 
-## For Minecraft
+## For games using `XCurl.dll`
 
-**NOTES**: OpenSSL only works in protonified wine builds. You can use GDK-Proton (in the Releases section of this Repository) if you are not inclined to build proton from scratch yourself.   
+**NOTES**: OpenSSL only works in protonified wine builds. You can use GDK-Proton (in the Releases section of this Repository) if you are not inclined to build proton from scratch yourself.
 
-To get online functionality working, you will need to follow this guide, exactly as mentioned:  
-1) Download [mingw-w64-x86_64-curl](https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-curl-8.17.0-1-any.pkg.tar.zst) and extract it
-2) In the extracted folder, rename `mingw64/bin/libcurl-4.dll` to `XCurl.dll`.
-3) Copy it to Minecraft's binaries, replacing `XCurl.dll`.
-4) Obtain SSL certificates from https://curl.se/ca/cacert.pem and rename this file to `ca-bundle.crt`
-5) **IMPORTANT**, Create a folder named `etc`, and under that folder create another folder named `ssl`, and under the `ssl` folder, create a `certs` folder.
-6) **IMPORTANT**, Move `ca-bundle.crt` to this new `certs` folder.
-if you've done everything correctly, your file structure should look a bit like the following image:
-<img width="772" height="240" alt="image" src="https://github.com/user-attachments/assets/d6e27fc3-ecb4-46be-9448-800535bbc1b6" />
+To get online functionality working, use the `replace-xcurl` script in this repo, syntax:
 
-Now if you launch the game, the game should be able to phone home and get online. Just keep in mind that `XUser` is still not implemented so no Microsoft Account login yet.   
+```sh
+./replace-xcurl [path/to/game]
+```
+
+Now if you launch the game, the game should be able to phone home and get online. Just keep in mind that `XUser` is still not implemented so no Microsoft Account login yet.
